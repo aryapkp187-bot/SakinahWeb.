@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SakinahWeb — Ruang Tenang Ibadah & Literasi Islami</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans & Amiri (untuk teks Arab berharakat jelas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        arabic: ['"Amiri"', 'serif'],
+                    },
+                    colors: {
+                        sage: {
+                            50: '#F4F7F4',
+                            100: '#E4EDE5',
+                            200: '#C6D8C8',
+                            300: '#9EBCA3',
+                            400: '#729778',
+                            500: '#537759',
+                            600: '#3F5D45',
+                            700: '#334B38',
+                            800: '#2A3D2E',
+                            900: '#223125',
+                        },
+                        beige: {
+                            50: '#FCFBF7',
+                            100: '#F7F3EA',
+                            200: '#EFE7D6',
+                            300: '#E2D5BC',
+                            400: '#CEB995',
+                        },
+                        gold: {
+                            50: '#FFFBEB',
+                            100: '#FEF3C7',
+                            200: '#FDE68A',
+                            300: '#FCD34D',
+                            400: '#EAB308',
+                            500: '#CA8A04',
+                            600: '#A16207',
+                        },
+                        calmDark: {
+                            bg: '#131815',
+                            card: '#1B221D',
+                            elevated: '#232C26',
+                            border: '#2C372F',
+                        }
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(8px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0.55' },
+                            '100%': { transform: 'scale(1.3)', opacity: '0' },
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                        'ripple': 'ripple 0.45s ease-out forwards',
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        html, body {
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            line-height: 2.15;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(114, 151, 120, 0.3);
+            border-radius: 999px;
+        }
+
+        * {
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+        }
+    </style>
+</head>
+<body class="bg-beige-100 text-sage-900 dark:bg-calmDark-bg dark:text-beige-100 min-h-screen antialiased selection:bg-sage-200 dark:selection:bg-sage-800">
+
+    <!-- Toast Notifikasi -->
+    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-3 transition-all duration-300 bg-sage-800 dark:bg-beige-100 text-white dark:text-sage-900 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-xl flex items-center gap-2 border border-white/10">
+        <span id="toast-icon">✨</span>
+        <span id="toast-text">Tersimpan</span>
+    </div>
+
+    <!-- Layout Wrapper: Mobile-first dengan Sidebar/Top Nav di Desktop -->
+    <div class="min-h-screen flex flex-col lg:flex-row max-w-7xl mx-auto">
+
+        <!-- ================= DESKTOP SIDEBAR NAV ================= -->
+        <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:shrink-0 lg:sticky lg:top-0 lg:h-screen p-6 border-r border-beige-200 dark:border-calmDark-border bg-beige-50/80 dark:bg-calmDark-card/50 backdrop-blur-md">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sage-400 to-sage-600 flex items-center justify-center text-white shadow-md shadow-sage-500/20">
+                    <i data-lucide="moon-star" class="w-5 h-5 text-gold-200"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl tracking-tight text-sage-900 dark:text-beige-50">SakinahWeb</h1>
+                    <p class="text-[11px] font-medium text-sage-500 dark:text-sage-400">Islamic Companion</p>
+                </div>
+            </div>
+
+            <!-- Menu Navigasi Desktop -->
+            <nav class="space-y-1.5 flex-1">
+                <button data-tab="dashboard" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold bg-sage-400 text-white shadow-sm">
+                    <i data-lucide="compass" class="w-4 h-4"></i>
+                    <span>Dashboard & Salat</span>
+                </button>
+                <button data-tab="quran" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>Al-Qur'an & Hadis</span>
+                </button>
+                <button data-tab="zikir" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Zikir & Tasbih</span>
+                </button>
+                <button data-tab="habits" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    <span>Habit & Tilawah</span>
+                </button>
+                <button data-tab="mood" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated">
+                    <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                    <span>Mood & Penenang</span>
+                </button>
+                <button data-tab="zakat" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated">
+                    <i data-lucide="coins" class="w-4 h-4"></i>
+                    <span>Zakat & Sedekah</span>
+                </button>
+            </nav>
+
+            <!-- Info Kalender Hijriah Ringkas di Sidebar -->
+            <div class="p-4 rounded-3xl bg-beige-100 dark:bg-calmDark-elevated border border-beige-200 dark:border-calmDark-border">
+                <p class="text-[11px] font-bold uppercase tracking-wider text-gold-600 dark:text-gold-300">Kalender Hari Ini</p>
+                <p id="sidebar-gregorian" class="text-xs font-bold text-sage-900 dark:text-beige-100 mt-1">Memuat...</p>
+                <p id="sidebar-hijri" class="text-xs font-semibold text-sage-600 dark:text-sage-300 mt-0.5">Memuat Hijriah...</p>
+            </div>
+        </aside>
+
+        <!-- ================= AREA KONTEN UTAMA ================= -->
+        <div class="flex-1 flex flex-col min-w-0">
+
+            <!-- Header Atas (Sticky Mobile & Desktop) -->
+            <header class="sticky top-0 z-30 bg-beige-50/90 dark:bg-calmDark-bg/90 backdrop-blur-md border-b border-beige-200/80 dark:border-calmDark-border px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 lg:hidden">
+                    <div class="w-9 h-9 rounded-2xl bg-sage-400 dark:bg-sage-600 flex items-center justify-center text-white shadow-xs">
+                        <i data-lucide="moon-star" class="w-4 h-4 text-gold-200"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-base tracking-tight text-sage-900 dark:text-beige-50 block leading-none">SakinahWeb</span>
+                        <span id="mobile-hijri-badge" class="text-[10px] font-semibold text-sage-500 dark:text-sage-400">Memuat tanggal...</span>
+                    </div>
+                </div>
+
+                <!-- Judul Halaman Aktif di Desktop -->
+                <div class="hidden lg:block">
+                    <h2 id="desktop-page-title" class="text-lg font-extrabold text-sage-900 dark:text-beige-50">Dashboard & Waktu Salat</h2>
+                    <p id="desktop-page-subtitle" class="text-xs text-sage-500 dark:text-sage-400">Tenang, terarah, dan penuh keberkahan setiap hari</p>
+                </div>
+
+                <!-- Kontrol Kanan: Kota & Theme Toggle -->
+                <div class="flex items-center gap-2 ml-auto">
+                    <button id="btn-quick-city" class="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border text-xs font-bold text-sage-700 dark:text-beige-200 hover:border-sage-400 shadow-2xs">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold-600 dark:text-gold-300"></i>
+                        <span id="header-city-name">Jakarta</span>
+                    </button>
+
+                    <button id="theme-toggle" aria-label="Ganti Tema Terang/Gelap" class="w-10 h-10 rounded-2xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border flex items-center justify-center text-sage-700 dark:text-gold-300 hover:bg-sage-50 dark:hover:bg-calmDark-elevated shadow-2xs">
+                        <i data-lucide="sun" class="w-4 h-4 block dark:hidden text-gold-600"></i>
+                        <i data-lucide="moon" class="w-4 h-4 hidden dark:block text-gold-300"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Konten Tab (Padding bawah cukup untuk Bottom Nav di Mobile) -->
+            <main class="flex-1 px-4 sm:px-6 lg:px-8 pt-5 pb-28 lg:pb-10 space-y-6">
+
+                <!-- =========================================================
+                     1. DASHBOARD IBADAH HARIAN & WAKTU SALAT PRESISI
+                ========================================================== -->
+                <section id="tab-dashboard" class="tab-panel space-y-6 animate-fade-in">
+
+                    <!-- Hero Card: Countdown Salat Berikutnya & Tanggal Masehi/Hijriah -->
+                    <div class="rounded-4xl bg-gradient-to-br from-sage-500 via-sage-600 to-sage-700 dark:from-sage-800 dark:via-sage-900 dark:to-calmDark-card p-6 sm:p-7 text-white shadow-lg shadow-sage-500/15 dark:shadow-none relative overflow-hidden border border-white/10">
+                        <div class="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-gold-300/15 pointer-events-none"></div>
+                        <div class="absolute -left-8 -bottom-12 w-36 h-36 rounded-full bg-white/10 pointer-events-none"></div>
+
+                        <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                            <div>
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-[11px] font-semibold text-gold-100 mb-3">
+                                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                                    <span id="hero-gregorian-date">Sabtu, 21 November 2026</span>
+                                    <span>•</span>
+                                    <span id="hero-hijri-date" class="text-gold-200 font-bold">Memuat Hijriah...</span>
+                                </div>
+
+                                <p class="text-xs sm:text-sm text-sage-100 font-medium">Waktu Salat Berikutnya:</p>
+                                <div class="flex items-baseline gap-3 mt-1">
+                                    <h3 id="next-prayer-name" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Memuat...</h3>
+                                    <span id="next-prayer-time" class="text-sm sm:text-base font-bold px-2.5 py-0.5 rounded-xl bg-gold-400/25 text-gold-200">--:--</span>
+                                </div>
+                            </div>
+
+                            <!-- Countdown Box -->
+                            <div class="bg-black/20 dark:bg-black/30 backdrop-blur-sm rounded-3xl p-4 sm:px-6 border border-white/10 text-center md:text-right">
+                                <span class="text-[11px] uppercase tracking-wider text-sage-100 font-semibold block">Menuju Waktu Salat</span>
+                                <span id="prayer-countdown" class="text-2xl sm:text-3xl font-extrabold tracking-wider text-gold-200 font-mono mt-0.5 block">00:00:00</span>
+                                <span id="prayer-source-info" class="text-[10px] text-sage-200/80 block mt-1">Metode Kemenag / Aladhan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pencarian Kota di Indonesia & Jadwal 7 Waktu -->
+                    <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div>
+                                <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Jadwal Waktu Salat Harian</h3>
+                                <p class="text-xs text-sage-500 dark:text-sage-400">Pilih atau cari kota di Indonesia untuk jadwal otomatis</p>
+                            </div>
+
+                            <!-- Input Pencarian Kota -->
+                            <div class="relative w-full sm:w-64">
+                                <input type="text" id="city-search-input" placeholder="Cari kota (cth: Bandung, Surabaya)..." class="w-full pl-9 pr-3 py-2 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-xs font-medium text-sage-900 dark:text-beige-100 placeholder-sage-400 focus:outline-none focus:border-sage-400" />
+                                <i data-lucide="search" class="w-3.5 h-3.5 text-sage-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+
+                                <!-- Dropdown Hasil Pencarian Kota -->
+                                <div id="city-search-results" class="hidden absolute left-0 right-0 mt-1.5 bg-white dark:bg-calmDark-elevated border border-beige-200 dark:border-calmDark-border rounded-2xl shadow-xl max-h-48 overflow-y-auto z-20"></div>
+                            </div>
+                        </div>
+
+                        <!-- Grid 7 Waktu (Imsak, Subuh, Syuruq, Dzuhur, Ashar, Maghrib, Isya) -->
+                        <div id="prayer-times-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+                            <!-- Di-render lewat JS -->
+                        </div>
+                    </div>
+
+                    <!-- Baris Bawah: Kompas Arah Kiblat & Ringkasan Hari Ini -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Kompas Arah Kiblat -->
+                        <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs flex flex-col justify-between">
+                            <div class="flex items-start justify-between gap-2 mb-4">
+                                <div>
+                                    <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50 flex items-center gap-2">
+                                        <i data-lucide="navigation" class="w-4 h-4 text-sage-500 dark:text-sage-300"></i>
+                                        <span>Arah Kiblat</span>
+                                    </h3>
+                                    <p id="qibla-location-desc" class="text-xs text-sage-500 dark:text-sage-400 mt-0.5">Sudut azimut dari koordinat kota</p>
+                                </div>
+                                <button id="btn-gps-qibla" class="px-3 py-1.5 rounded-xl bg-sage-50 dark:bg-calmDark-elevated text-sage-700 dark:text-sage-200 text-xs font-bold hover:bg-sage-100 flex items-center gap-1">
+                                    <i data-lucide="locate-fixed" class="w-3.5 h-3.5"></i> GPS
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-5 my-1">
+                                <!-- Lingkaran Kompas Visual -->
+                                <div class="relative w-24 h-24 rounded-full bg-beige-100 dark:bg-calmDark-bg border-2 border-sage-200 dark:border-calmDark-border flex items-center justify-center shrink-0">
+                                    <span class="absolute top-1 text-[9px] font-bold text-sage-400">U</span>
+                                    <div id="qibla-needle" class="w-full h-full flex items-center justify-center transition-transform duration-500" style="transform: rotate(295deg);">
+                                        <div class="flex flex-col items-center -mt-4">
+                                            <span class="text-[10px] leading-none">🕋</span>
+                                            <div class="w-0.5 h-7 bg-gradient-to-t from-sage-400 to-gold-500 mt-0.5"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="text-xs text-sage-500 dark:text-sage-400">Azimut dari Utara (Searah Jarum Jam)</p>
+                                    <p id="qibla-degree-text" class="text-2xl font-extrabold text-sage-900 dark:text-beige-50 mt-0.5">295.2°</p>
+                                    <p id="qibla-compass-status" class="text-[11px] text-sage-600 dark:text-sage-300 font-medium mt-1">Arahkan bagian atas perangkat sesuai sudut Ka'bah.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ringkasan Cepat & Akses Cepat -->
+                        <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Langkah Tenang Hari Ini</h3>
+                                <p class="text-xs text-sage-500 dark:text-sage-400 mt-0.5">Ringkasan progres ibadah & bacaan terakhirmu</p>
+
+                                <div class="grid grid-cols-2 gap-3 mt-4">
+                                    <div class="p-3.5 rounded-2xl bg-sage-50 dark:bg-calmDark-bg border border-sage-100 dark:border-calmDark-border">
+                                        <span class="text-[11px] font-semibold text-sage-500 dark:text-sage-400 block">Habit Selesai</span>
+                                        <span id="dash-habit-summary" class="text-lg font-extrabold text-sage-800 dark:text-beige-100 mt-0.5 block">0 / 5</span>
+                                    </div>
+                                    <div class="p-3.5 rounded-2xl bg-gold-50/70 dark:bg-calmDark-bg border border-gold-200/70 dark:border-calmDark-border">
+                                        <span class="text-[11px] font-semibold text-gold-600 dark:text-gold-300 block">Terakhir Baca Qur'an</span>
+                                        <span id="dash-last-read" class="text-sm font-extrabold text-sage-900 dark:text-beige-100 mt-1 block truncate">Belum ada</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="switchTab('quran')" class="flex-1 py-2.5 px-3 rounded-2xl bg-sage-400 hover:bg-sage-500 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Buka Al-Qur'an
+                                </button>
+                                <button onclick="switchTab('zikir')" class="flex-1 py-2.5 px-3 rounded-2xl bg-beige-100 dark:bg-calmDark-elevated hover:bg-beige-200 text-sage-800 dark:text-beige-100 text-xs font-bold flex items-center justify-center gap-1.5">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold-600 dark:text-gold-300"></i> Tasbih & Zikir
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- =========================================================
+                     2. AL-QUR'AN DIGITAL & LITERASI KEISLAMAN (HADIS)
+                ========================================================== -->
+                <section id="tab-quran" class="tab-panel hidden space-y-6 animate-fade-in">
+
+                    <!-- Sub-tab Switcher: Al-Qur'an vs Hadis Pilihan -->
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div class="inline-flex p-1 rounded-2xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border">
+                            <button id="subtab-quran-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-sage-400 text-white">Al-Qur'an Digital</button>
+                            <button id="subtab-hadith-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-sage-600 dark:text-beige-200">Hadis Pilihan</button>
+                        </div>
+
+                        <!-- Info Last Read & Bookmark Count -->
+                        <div class="flex items-center gap-2 text-xs">
+                            <button id="btn-jump-last-read" class="px-3 py-2 rounded-2xl bg-gold-50 dark:bg-calmDark-card border border-gold-200 dark:border-calmDark-border text-gold-700 dark:text-gold-300 font-bold flex items-center gap-1.5">
+                                <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+                                <span id="last-read-label">Last Read: -</span>
+                            </button>
+                            <button id="btn-view-bookmarks" class="px-3 py-2 rounded-2xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border text-sage-700 dark:text-beige-200 font-bold flex items-center gap-1.5">
+                                <i data-lucide="tag" class="w-3.5 h-3.5 text-sage-500"></i>
+                                <span>Bookmark (<span id="bookmark-count">0</span>)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SUB-PANEL A: AL-QUR'AN DIGITAL -->
+                    <div id="quran-view" class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+                        <!-- Kolom Kiri: Daftar Surat & Pencarian -->
+                        <div class="lg:col-span-4 bg-white dark:bg-calmDark-card rounded-3xl p-4 sm:p-5 border border-beige-200 dark:border-calmDark-border shadow-2xs flex flex-col max-h-[75vh]">
+                            <h3 class="font-extrabold text-sm text-sage-900 dark:text-beige-50 mb-3">Daftar Surat (114 Surat)</h3>
+
+                            <div class="relative mb-3">
+                                <input type="text" id="surah-search" placeholder="Cari nama atau nomor surat..." class="w-full pl-9 pr-3 py-2 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-xs text-sage-900 dark:text-beige-100 focus:outline-none focus:border-sage-400" />
+                                <i data-lucide="search" class="w-3.5 h-3.5 text-sage-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                            </div>
+
+                            <div id="surah-list" class="space-y-1.5 overflow-y-auto pr-1 flex-1">
+                                <p class="text-xs text-sage-400 text-center py-8">Memuat daftar surat...</p>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Pembaca Ayat, Kontrol Font, Focus Mode & Audio Murottal -->
+                        <div id="quran-reader-card" class="lg:col-span-8 bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+
+                            <!-- Toolbar Pembacaan -->
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-beige-200/80 dark:border-calmDark-border">
+                                <div>
+                                    <h3 id="active-surah-title" class="text-lg font-extrabold text-sage-900 dark:text-beige-50">Al-Fatihah</h3>
+                                    <p id="active-surah-meta" class="text-xs text-sage-500 dark:text-sage-400">Pembukaan • 7 Ayat • Mekkah</p>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <!-- Kontrol Ukuran Font Arab -->
+                                    <div class="flex items-center gap-1 bg-beige-100 dark:bg-calmDark-bg px-2.5 py-1.5 rounded-xl border border-beige-200 dark:border-calmDark-border">
+                                        <span class="text-[11px] font-bold text-sage-500 mr-1">Arab</span>
+                                        <button id="font-dec" class="w-6 h-6 rounded-lg bg-white dark:bg-calmDark-elevated text-xs font-extrabold flex items-center justify-center">-</button>
+                                        <span id="arabic-font-size-label" class="text-[11px] font-bold px-1">28px</span>
+                                        <button id="font-inc" class="w-6 h-6 rounded-lg bg-white dark:bg-calmDark-elevated text-xs font-extrabold flex items-center justify-center">+</button>
+                                    </div>
+
+                                    <!-- Focus Reading Mode Toggle -->
+                                    <button id="btn-focus-mode" class="px-3 py-1.5 rounded-xl bg-sage-50 dark:bg-calmDark-elevated text-sage-700 dark:text-sage-200 text-xs font-bold flex items-center gap-1.5 hover:bg-sage-100">
+                                        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                                        <span>Focus Mode</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Pemutar Audio Murottal & Repeat Muraja'ah -->
+                            <div class="p-3.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <button id="btn-play-surah-audio" class="w-10 h-10 rounded-2xl bg-sage-400 hover:bg-sage-500 text-white flex items-center justify-center shadow-xs shrink-0">
+                                        <i data-lucide="play" id="surah-audio-icon" class="w-4 h-4"></i>
+                                    </button>
+                                    <div>
+                                        <p id="audio-status-text" class="text-xs font-bold text-sage-900 dark:text-beige-100">Murottal Surat (Mishary Rashid)</p>
+                                        <p id="audio-sub-text" class="text-[11px] text-sage-500 dark:text-sage-400">Klik play untuk memutar atau pilih ikon audio per ayat</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <button id="btn-repeat-toggle" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-calmDark-elevated border border-beige-200 dark:border-calmDark-border text-sage-700 dark:text-beige-200 flex items-center gap-1.5">
+                                        <i data-lucide="repeat" class="w-3.5 h-3.5"></i>
+                                        <span id="repeat-mode-label">Repeat: Off</span>
+                                    </button>
+                                </div>
+
+                                <audio id="quran-audio-player" preload="none"></audio>
+                            </div>
+
+                            <!-- Daftar Ayat -->
+                            <div id="ayah-list" class="space-y-4 max-h-[58vh] overflow-y-auto pr-1">
+                                <p class="text-xs text-sage-400 text-center py-10">Memuat ayat-ayat Al-Qur'an...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daftar Bookmark Bertag (Modal/Drawer Sederhana di Bawah atau Toggle) -->
+                    <div id="bookmarks-drawer" class="hidden bg-white dark:bg-calmDark-card rounded-3xl p-5 border border-gold-200 dark:border-calmDark-border shadow-2xs space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-extrabold text-sm text-sage-900 dark:text-beige-50 flex items-center gap-2">
+                                <i data-lucide="bookmark" class="w-4 h-4 text-gold-500"></i>
+                                <span>Ayat Tersimpan (Bookmarks)</span>
+                            </h4>
+                            <button onclick="document.getElementById('bookmarks-drawer').classList.add('hidden')" class="text-xs font-bold text-sage-500">Tutup</button>
+                        </div>
+                        <div id="bookmarks-list" class="space-y-2.5"></div>
+                    </div>
+
+                    <!-- SUB-PANEL B: HADIS PILIHAN TEMATIK -->
+                    <div id="hadith-view" class="hidden space-y-4">
+                        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" id="hadith-category-pills">
+                            <button data-cat="Semua" class="hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-sage-400 text-white shrink-0">Semua</button>
+                            <button data-cat="Akhlak" class="hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-white dark:bg-calmDark-card text-sage-700 dark:text-beige-200 border border-beige-200 dark:border-calmDark-border shrink-0">Akhlak</button>
+                            <button data-cat="Ketenangan Hati" class="hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-white dark:bg-calmDark-card text-sage-700 dark:text-beige-200 border border-beige-200 dark:border-calmDark-border shrink-0">Ketenangan Hati</button>
+                            <button data-cat="Keluarga" class="hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-white dark:bg-calmDark-card text-sage-700 dark:text-beige-200 border border-beige-200 dark:border-calmDark-border shrink-0">Keluarga</button>
+                            <button data-cat="Muamalah" class="hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-white dark:bg-calmDark-card text-sage-700 dark:text-beige-200 border border-beige-200 dark:border-calmDark-border shrink-0">Muamalah</button>
+                        </div>
+
+                        <div id="hadith-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Di-render lewat JS -->
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- =========================================================
+                     3. ZIKIR, DOA & TASBIH DIGITAL
+                ========================================================== -->
+                <section id="tab-zikir" class="tab-panel hidden space-y-6 animate-fade-in">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                        <!-- Kolom Kiri: Tasbih Digital Interaktif -->
+                        <div class="lg:col-span-5 bg-white dark:bg-calmDark-card rounded-4xl p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs flex flex-col items-center text-center">
+                            <span class="px-3 py-1 rounded-full bg-sage-50 dark:bg-calmDark-elevated text-sage-600 dark:text-sage-300 text-[11px] font-bold mb-2">Tasbih Digital</span>
+                            <h3 class="text-lg font-extrabold text-sage-900 dark:text-beige-50">Hitungan Dzikir Tenang</h3>
+
+                            <!-- Pilihan Bacaan Tasbih -->
+                            <div class="flex flex-wrap justify-center gap-1.5 my-3" id="tasbih-phrase-pills">
+                                <button data-arab="سُبْحَانَ اللَّهِ" data-latin="Subhanallah" class="tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sage-400 text-white">Subhanallah</button>
+                                <button data-arab="الْحَمْدُ لِلَّهِ" data-latin="Alhamdulillah" class="tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200">Alhamdulillah</button>
+                                <button data-arab="اللَّهُ أَكْبَرُ" data-latin="Allahu Akbar" class="tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200">Allahu Akbar</button>
+                                <button data-arab="أَسْتَغْفِرُ اللَّهَ" data-latin="Astaghfirullah" class="tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200">Astaghfirullah</button>
+                            </div>
+
+                            <!-- Teks Arab & Latin Aktif -->
+                            <div class="my-2">
+                                <p id="tasbih-active-arab" class="arabic-text text-2xl font-bold text-sage-700 dark:text-sage-300">سُبْحَانَ اللَّهِ</p>
+                                <p id="tasbih-active-latin" class="text-xs font-semibold text-sage-500 dark:text-sage-400">Subhanallah</p>
+                            </div>
+
+                            <!-- Target & Reset -->
+                            <div class="w-full flex items-center justify-between my-3 px-1">
+                                <div class="flex items-center gap-1.5 bg-beige-100 dark:bg-calmDark-bg px-3 py-1.5 rounded-xl">
+                                    <span class="text-[11px] font-semibold text-sage-500">Target:</span>
+                                    <select id="tasbih-target-select" class="bg-transparent text-xs font-extrabold text-sage-900 dark:text-beige-100 focus:outline-none">
+                                        <option value="33">33x</option>
+                                        <option value="99">99x</option>
+                                        <option value="100">100x</option>
+                                    </select>
+                                </div>
+                                <button id="tasbih-reset-btn" class="px-3 py-1.5 rounded-xl bg-gold-50 dark:bg-calmDark-elevated text-gold-700 dark:text-gold-300 text-xs font-bold flex items-center gap-1 hover:bg-gold-100">
+                                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
+                                </button>
+                            </div>
+
+                            <!-- Tombol Counter Besar -->
+                            <div class="relative my-4 flex items-center justify-center">
+                                <div id="tasbih-ripple-ring" class="w-44 h-44 rounded-full bg-sage-300/30 dark:bg-sage-500/20 absolute pointer-events-none"></div>
+                                <button id="tasbih-main-btn" class="relative w-40 h-40 rounded-full bg-gradient-to-b from-sage-400 to-sage-600 dark:from-sage-600 dark:to-sage-800 text-white shadow-xl shadow-sage-500/25 flex flex-col items-center justify-center active:scale-95 transition-transform border-4 border-white dark:border-calmDark-elevated cursor-pointer select-none">
+                                    <span id="tasbih-current-count" class="text-4xl font-extrabold tracking-tight">0</span>
+                                    <span class="text-[11px] text-sage-100 font-medium mt-1">Ketuk Dzikir</span>
+                                </button>
+                            </div>
+
+                            <div class="w-full pt-3 border-t border-beige-200/70 dark:border-calmDark-border flex items-center justify-between text-xs">
+                                <span class="text-sage-500 dark:text-sage-400 font-medium">Total Dzikir Tercatat:</span>
+                                <span id="tasbih-total-count" class="font-extrabold text-sage-900 dark:text-gold-300 bg-beige-100 dark:bg-calmDark-bg px-3 py-1 rounded-full">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Kumpulan Zikir & Doa Terstruktur -->
+                        <div class="lg:col-span-7 bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <div>
+                                    <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Zikir & Doa Harian Terstruktur</h3>
+                                    <p class="text-xs text-sage-500 dark:text-sage-400">Lengkap dengan teks Arab, transliterasi, arti, dan rujukan</p>
+                                </div>
+                            </div>
+
+                            <!-- Kategori Zikir & Doa -->
+                            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1" id="zikir-category-tabs">
+                                <button data-zcat="Zikir Pagi" class="zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-sage-400 text-white shrink-0">Zikir Pagi</button>
+                                <button data-zcat="Zikir Petang" class="zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200 shrink-0">Zikir Petang</button>
+                                <button data-zcat="Setelah Salat" class="zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200 shrink-0">Setelah Salat</button>
+                                <button data-zcat="Doa Harian" class="zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200 shrink-0">Doa Harian</button>
+                            </div>
+
+                            <div id="zikir-list-container" class="space-y-3.5 max-h-[65vh] overflow-y-auto pr-1">
+                                <!-- Di-render lewat JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- =========================================================
+                     4. PELACAK KEBIASAAN (NON-GUILT TRIP) & TILAWAH ADAPTIF
+                ========================================================== -->
+                <section id="tab-habits" class="tab-panel hidden space-y-6 animate-fade-in">
+
+                    <!-- Pesan Ramah Non-Guilt Trip & Progres Mingguan -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+                        <!-- Checklist Ibadah Harian -->
+                        <div class="lg:col-span-7 bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Checklist Ibadah Ringan</h3>
+                                    <p class="text-xs text-sage-500 dark:text-sage-400">Tidak perlu sempurna setiap hari—yang penting terus melangkah lembut.</p>
+                                </div>
+                                <span id="habit-progress-pill" class="px-3 py-1 rounded-full bg-sage-100 dark:bg-sage-900/50 text-sage-700 dark:text-sage-300 text-xs font-extrabold">0%</span>
+                            </div>
+
+                            <div id="habit-checklist-container" class="space-y-2.5">
+                                <!-- Di-render lewat JS -->
+                            </div>
+
+                            <!-- Tambah Habit Custom -->
+                            <div class="pt-3 border-t border-beige-200/70 dark:border-calmDark-border flex gap-2">
+                                <input type="text" id="custom-habit-input" placeholder="Tambah amalan kebiasaan sendiri (cth: Baca 2 halaman Qur'an)..." class="flex-1 px-3.5 py-2 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-xs text-sage-900 dark:text-beige-100 focus:outline-none focus:border-sage-400" />
+                                <button id="btn-add-custom-habit" class="px-4 py-2 rounded-2xl bg-sage-400 hover:bg-sage-500 text-white text-xs font-bold shrink-0">Tambah</button>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Progres Mingguan Suportif & Rencana Tilawah Adaptif -->
+                        <div class="lg:col-span-5 space-y-5">
+
+                            <!-- Visualisasi Progres 7 Hari Terakhir (Ramah & Tidak Menghakimi) -->
+                            <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-extrabold text-sm text-sage-900 dark:text-beige-50">Jejak 7 Hari Terakhir</h4>
+                                    <span class="text-[11px] font-semibold text-sage-500 dark:text-sage-400">Suportif & Tenang</span>
+                                </div>
+                                <div id="weekly-supportive-bars" class="grid grid-cols-7 gap-2 pt-1">
+                                    <!-- Di-render lewat JS -->
+                                </div>
+                                <p id="supportive-note" class="text-[11px] text-sage-600 dark:text-sage-300 bg-sage-50 dark:bg-calmDark-bg p-3 rounded-2xl leading-relaxed">
+                                    Setiap usaha kecil bernilai di sisi Allah. Jika ada hari yang terlewat, cukup lanjutkan hari ini dengan penuh ketenangan.
+                                </p>
+                            </div>
+
+                            <!-- Rencana Target Tilawah Adaptif -->
+                            <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-3.5">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl bg-gold-100 dark:bg-gold-500/15 text-gold-600 dark:text-gold-300 flex items-center justify-center">
+                                        <i data-lucide="book-marked" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-extrabold text-sm text-sage-900 dark:text-beige-50">Target Tilawah Adaptif</h4>
+                                        <p class="text-[11px] text-sage-500 dark:text-sage-400">Hitung otomatis halaman/hari (Total 604 hal Mushaf)</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2.5 text-xs">
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-sage-500 mb-1">Halaman Terbaca</label>
+                                        <input type="number" id="tilawah-read-pages" min="0" max="604" class="w-full px-3 py-2 rounded-xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border font-bold text-sage-900 dark:text-beige-100" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-sage-500 mb-1">Target Selesai (Hari)</label>
+                                        <select id="tilawah-target-days" class="w-full px-3 py-2 rounded-xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border font-bold text-sage-900 dark:text-beige-100">
+                                            <option value="30">30 Hari (1 Juz/hari)</option>
+                                            <option value="60">60 Hari (0.5 Juz/hari)</option>
+                                            <option value="90">90 Hari (Santai)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="tilawah-adaptive-result" class="p-3.5 rounded-2xl bg-gold-50/80 dark:bg-calmDark-bg border border-gold-200/70 dark:border-calmDark-border text-xs text-sage-800 dark:text-beige-100">
+                                    <!-- Di-render lewat JS -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- =========================================================
+                     5. KURASI KONTEN BERBASIS SUASANA HATI (MOOD & SOUL)
+                ========================================================== -->
+                <section id="tab-mood" class="tab-panel hidden space-y-6 animate-fade-in">
+                    <div class="bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-5">
+                        <div>
+                            <h3 class="font-extrabold text-lg text-sage-900 dark:text-beige-50">Mood & Soul Companion</h3>
+                            <p class="text-xs sm:text-sm text-sage-500 dark:text-sage-400 mt-0.5">Pilih kondisi hati atau kebutuhanmu saat ini untuk menemukan ayat, doa, dan renungan penenang jiwa.</p>
+                        </div>
+
+                        <!-- Pilihan Mood -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="mood-selector-grid">
+                            <button data-mood="cemas" class="mood-btn p-3.5 rounded-2xl border-2 border-sage-400 bg-sage-50 dark:bg-sage-900/40 text-left transition-all">
+                                <span class="text-xl block mb-1">🌧️</span>
+                                <span class="text-xs font-extrabold text-sage-900 dark:text-beige-50 block">Cemas / Gelisah</span>
+                                <span class="text-[10px] text-sage-500 dark:text-sage-400">Menenangkan pikiran</span>
+                            </button>
+                            <button data-mood="lelah" class="mood-btn p-3.5 rounded-2xl border border-beige-200 dark:border-calmDark-border bg-white dark:bg-calmDark-bg text-left transition-all">
+                                <span class="text-xl block mb-1">🍃</span>
+                                <span class="text-xs font-extrabold text-sage-900 dark:text-beige-50 block">Lelah Bekerja</span>
+                                <span class="text-[10px] text-sage-500 dark:text-sage-400">Menguatkan langkah</span>
+                            </button>
+                            <button data-mood="bersyukur" class="mood-btn p-3.5 rounded-2xl border border-beige-200 dark:border-calmDark-border bg-white dark:bg-calmDark-bg text-left transition-all">
+                                <span class="text-xl block mb-1">☀️</span>
+                                <span class="text-xs font-extrabold text-sage-900 dark:text-beige-50 block">Bersyukur</span>
+                                <span class="text-[10px] text-sage-500 dark:text-sage-400">Merawat nikmat</span>
+                            </button>
+                            <button data-mood="petunjuk" class="mood-btn p-3.5 rounded-2xl border border-beige-200 dark:border-calmDark-border bg-white dark:bg-calmDark-bg text-left transition-all">
+                                <span class="text-xl block mb-1">🧭</span>
+                                <span class="text-xs font-extrabold text-sage-900 dark:text-beige-50 block">Mencari Petunjuk</span>
+                                <span class="text-[10px] text-sage-500 dark:text-sage-400">Kejernihan keputusan</span>
+                            </button>
+                        </div>
+
+                        <!-- Hasil Kurasi Ayat, Doa & Renungan -->
+                        <div id="mood-curation-card" class="rounded-3xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border p-5 sm:p-6 space-y-5">
+                            <!-- Di-render lewat JS -->
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- =========================================================
+                     6. KALKULATOR ZAKAT & CATATAN FILANTROPI (SEDEKAH)
+                ========================================================== -->
+                <section id="tab-zakat" class="tab-panel hidden space-y-6 animate-fade-in">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                        <!-- Kolom Kiri: Kalkulator Zakat -->
+                        <div class="lg:col-span-7 bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <div>
+                                    <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Kalkulator Zakat Praktis</h3>
+                                    <p class="text-xs text-sage-500 dark:text-sage-400">Sesuaikan parameter harga emas/beras sesuai kondisi terkini</p>
+                                </div>
+                            </div>
+
+                            <!-- Parameter Harga Acuan (Bisa Diedit Pengguna) -->
+                            <div class="grid grid-cols-2 gap-3 p-3.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-sage-600 dark:text-sage-300 mb-1">Harga Emas / gram (Rp)</label>
+                                    <input type="number" id="gold-price-input" value="1450000" min="100000" step="10000" class="w-full px-3 py-1.5 rounded-xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border text-xs font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-sage-600 dark:text-sage-300 mb-1">Harga Beras / kg (Rp)</label>
+                                    <input type="number" id="rice-price-input" value="15000" min="5000" step="500" class="w-full px-3 py-1.5 rounded-xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border text-xs font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                            </div>
+
+                            <!-- Jenis Zakat Tabs -->
+                            <div class="flex gap-2">
+                                <button data-ztype="profesi" class="ztype-btn flex-1 py-2 px-3 rounded-2xl text-xs font-bold bg-sage-400 text-white">Penghasilan</button>
+                                <button data-ztype="maal" class="ztype-btn flex-1 py-2 px-3 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200">Maal (Emas/Tabungan)</button>
+                                <button data-ztype="fitrah" class="ztype-btn flex-1 py-2 px-3 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200">Fitrah</button>
+                            </div>
+
+                            <!-- Form Zakat Penghasilan -->
+                            <div id="zakat-form-profesi" class="zakat-form space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-sage-700 dark:text-beige-200 mb-1">Penghasilan Bersih / Gaji Bulanan (Rp)</label>
+                                    <input type="number" id="income-monthly" placeholder="Contoh: 7000000" class="w-full px-3.5 py-2.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-sm font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-sage-700 dark:text-beige-200 mb-1">Bonus / Pendapatan Lain Bulan Ini (Rp, opsional)</label>
+                                    <input type="number" id="income-bonus" placeholder="0" class="w-full px-3.5 py-2.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-sm font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                            </div>
+
+                            <!-- Form Zakat Maal -->
+                            <div id="zakat-form-maal" class="zakat-form hidden space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-sage-700 dark:text-beige-200 mb-1">Total Tabungan, Deposito & Uang Tunai (Rp)</label>
+                                    <input type="number" id="maal-savings" placeholder="Contoh: 50000000" class="w-full px-3.5 py-2.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-sm font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-sage-700 dark:text-beige-200 mb-1">Nilai Emas / Perak / Aset Produktif Lain (Rp)</label>
+                                    <input type="number" id="maal-gold-value" placeholder="0" class="w-full px-3.5 py-2.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-sm font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                            </div>
+
+                            <!-- Form Zakat Fitrah -->
+                            <div id="zakat-form-fitrah" class="zakat-form hidden space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-sage-700 dark:text-beige-200 mb-1">Jumlah Anggota Keluarga / Jiwa</label>
+                                    <input type="number" id="fitrah-persons" value="1" min="1" class="w-full px-3.5 py-2.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-sm font-bold text-sage-900 dark:text-beige-100" />
+                                </div>
+                                <p class="text-[11px] text-sage-500 dark:text-sage-400">Standar pokok: 2,5 kg beras per jiwa (dapat disesuaikan melalui harga beras/kg di atas).</p>
+                            </div>
+
+                            <button id="btn-calc-zakat" class="w-full py-3 rounded-2xl bg-sage-500 hover:bg-sage-600 text-white text-xs sm:text-sm font-extrabold shadow-sm">
+                                Hitung Zakat Sekarang
+                            </button>
+
+                            <!-- Hasil Perhitungan & Edukasi Nisab -->
+                            <div id="zakat-result-box" class="p-4 rounded-2xl bg-gold-50/80 dark:bg-calmDark-bg border border-gold-200 dark:border-calmDark-border space-y-1.5">
+                                <span class="text-[11px] font-bold uppercase text-gold-700 dark:text-gold-300 block">Hasil Perhitungan</span>
+                                <p id="zakat-amount-text" class="text-xl font-extrabold text-sage-900 dark:text-beige-50">Rp 0</p>
+                                <p id="zakat-nisab-info" class="text-xs text-sage-600 dark:text-sage-300 leading-relaxed">
+                                    Nisab zakat maal & penghasilan setara 85 gram emas. Pastikan harta telah mencapai nisab dan haul (1 tahun) untuk zakat maal.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Pencatat Sedekah / Amal Bulanan -->
+                        <div class="lg:col-span-5 bg-white dark:bg-calmDark-card rounded-3xl p-5 sm:p-6 border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-4">
+                            <div>
+                                <h3 class="font-extrabold text-base text-sage-900 dark:text-beige-50">Catatan Sedekah & Amal</h3>
+                                <p class="text-xs text-sage-500 dark:text-sage-400">Refleksi kebaikan bulanan yang tersimpan lokal</p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-sage-50 dark:bg-calmDark-bg border border-sage-200/70 dark:border-calmDark-border flex items-center justify-between">
+                                <div>
+                                    <span class="text-[11px] font-semibold text-sage-500 dark:text-sage-400 block">Total Sedekah Tercatat</span>
+                                    <span id="sedekah-total-display" class="text-lg font-extrabold text-sage-800 dark:text-gold-300">Rp 0</span>
+                                </div>
+                                <i data-lucide="heart" class="w-6 h-6 text-gold-500"></i>
+                            </div>
+
+                            <div class="space-y-2.5">
+                                <input type="text" id="sedekah-note-input" placeholder="Bentuk kebaikan (cth: Sedekah subuh / Makan siang teman)" class="w-full px-3.5 py-2 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-xs text-sage-900 dark:text-beige-100" />
+                                <div class="flex gap-2">
+                                    <input type="number" id="sedekah-amount-input" placeholder="Nominal (Rp, opsional)" class="flex-1 px-3.5 py-2 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border text-xs font-bold text-sage-900 dark:text-beige-100" />
+                                    <button id="btn-add-sedekah" class="px-4 py-2 rounded-2xl bg-sage-400 hover:bg-sage-500 text-white text-xs font-bold">Catat</button>
+                                </div>
+                            </div>
+
+                            <div id="sedekah-log-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+                                <!-- Di-render lewat JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= BOTTOM NAVIGATION BAR (MOBILE) ================= -->
+    <nav class="lg:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/95 dark:bg-calmDark-card/95 backdrop-blur-md border border-beige-200 dark:border-calmDark-border rounded-3xl px-1.5 py-1.5 shadow-xl flex items-center justify-between">
+        <button data-tab="dashboard" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-white bg-sage-400 font-bold text-[10px]">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+            <span>Salat</span>
+        </button>
+        <button data-tab="quran" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>Qur'an</span>
+        </button>
+        <button data-tab="zikir" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Tasbih</span>
+        </button>
+        <button data-tab="habits" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>Habit</span>
+        </button>
+        <button data-tab="mood" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]">
+            <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+            <span>Mood</span>
+        </button>
+        <button data-tab="zakat" class="mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]">
+            <i data-lucide="coins" class="w-4 h-4"></i>
+            <span>Zakat</span>
+        </button>
+    </nav>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        lucide.createIcons();
+
+        // ---------------------------------------------------------
+        // 1. KONFIGURASI & STATE PERSISTENCE (LOCAL STORAGE)
+        // ---------------------------------------------------------
+        const STORAGE_KEY = 'sakinahweb_v1_state';
+
+        const INDONESIAN_CITIES = [
+            { name: 'Jakarta', lat: -6.2088, lng: 106.8456 },
+            { name: 'Bandung', lat: -6.9175, lng: 107.6191 },
+            { name: 'Surabaya', lat: -7.2575, lng: 112.7521 },
+            { name: 'Yogyakarta', lat: -7.7956, lng: 110.3695 },
+            { name: 'Semarang', lat: -6.9667, lng: 110.4167 },
+            { name: 'Medan', lat: 3.5952, lng: 98.6722 },
+            { name: 'Makassar', lat: -5.1477, lng: 119.4327 },
+            { name: 'Palembang', lat: -2.9761, lng: 104.7754 },
+            { name: 'Denpasar', lat: -8.6705, lng: 115.2126 },
+            { name: 'Balikpapan', lat: -1.2379, lng: 116.8529 },
+            { name: 'Banda Aceh', lat: 5.5483, lng: 95.3238 },
+            { name: 'Padang', lat: -0.9471, lng: 100.4172 },
+            { name: 'Malang', lat: -7.9666, lng: 112.6326 },
+            { name: 'Solo', lat: -7.5755, lng: 110.8243 },
+            { name: 'Bogor', lat: -6.5971, lng: 106.8060 },
+            { name: 'Bekasi', lat: -6.2383, lng: 106.9756 },
+            { name: 'Depok', lat: -6.4025, lng: 106.7942 },
+            { name: 'Tangerang', lat: -6.1783, lng: 106.6319 },
+            { name: 'Pontianak', lat: -0.0263, lng: 109.3425 },
+            { name: 'Banjarmasin', lat: -3.3186, lng: 114.5944 },
+            { name: 'Manado', lat: 1.4748, lng: 124.8421 },
+            { name: 'Mataram', lat: -8.5833, lng: 116.1167 }
+        ];
+
+        const DEFAULT_HABITS = [
+            { id: 'salat5', title: 'Salat Fardu 5 Waktu', desc: 'Menjaga waktu salat harian', done: false },
+            { id: 'dhuha', title: 'Salat Sunnah Dhuha / Tahajud', desc: 'Ibadah sunnah penguat hati', done: false },
+            { id: 'tilawah', title: 'Tilawah Al-Qur\'an', desc: 'Membaca & merenungi ayat', done: false },
+            { id: 'sedekah', title: 'Sedekah / Kebaikan Kecil', desc: 'Berbagi manfaat hari ini', done: false },
+            { id: 'puasa', title: 'Puasa Sunnah (Senin-Kamis / Ayyamul Bidh)', desc: 'Jika sedang berpuasa sunnah', done: false }
+        ];
+
+        const HADITH_DATA = [
+            {
+                category: 'Akhlak',
+                arab: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
+                latin: 'Khairukum man ta\'allamal-qur\'ana wa \'allamahu',
+                translation: 'Sebaik-baik kalian adalah orang yang mempelajari Al-Qur\'an dan mengajarkannya.',
+                narrator: 'HR. Bukhari'
+            },
+            {
+                category: 'Ketenangan Hati',
+                arab: 'وَاعْلَمْ أَنَّ النَّصْرَ مَعَ الصَّبْرِ وَأَنَّ الْفَرَجَ مَعَ الْكَرْبِ',
+                latin: 'Wa\'lam annannashra ma\'ash-shabri wa annal-faraja ma\'al-karbi',
+                translation: 'Ketahuilah bahwa pertolongan itu bersama kesabaran, dan jalan keluar itu bersama kesulitan.',
+                narrator: 'HR. Ahmad'
+            },
+            {
+                category: 'Keluarga',
+                arab: 'خَيْرُكُمْ خَيْرُكُمْ لِأَهْلِهِ وَأَنَا خَيْرُكُمْ لِأَهْلِي',
+                latin: 'Khairukum khairukum li-ahlihi wa ana khairukum li-ahli',
+                translation: 'Sebaik-baik kalian adalah yang paling baik terhadap keluarganya, dan aku adalah yang paling baik terhadap keluargaku.',
+                narrator: 'HR. Tirmidzi'
+            },
+            {
+                category: 'Muamalah',
+                arab: 'إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلًا أَنْ يُتْقِنَهُ',
+                latin: 'Innallaha yuhibbu idza \'amila ahadukum \'amalan an yutqinahu',
+                translation: 'Sesungguhnya Allah mencintai apabila salah seorang di antara kalian mengerjakan suatu pekerjaan, ia melakukannya dengan baik dan rapi.',
+                narrator: 'HR. Thabrani'
+            }
+        ];
+
+        const ZIKIR_DATA = {
+            'Zikir Pagi': [
+                {
+                    title: 'Sayyidul Istighfar',
+                    arab: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ',
+                    latin: 'Allahumma anta rabbi la ilaha illa anta, khalaqtani wa ana \'abduka, wa ana \'ala \'ahdika wa wa\'dika mastatha\'tu...',
+                    meaning: 'Ya Allah, Engkau adalah Rabbku, tidak ada Tuhan yang berhak disembah selain Engkau. Engkau menciptakanku dan aku adalah hamba-Mu...',
+                    source: 'HR. Bukhari no. 6306'
+                },
+                {
+                    title: 'Doa Memohon Ilmu, Rezeki & Amal Diterima',
+                    arab: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا',
+                    latin: 'Allahumma inni as-aluka \'ilman nafi\'an, wa rizqan thayyiban, wa \'amalan mutaqabbalan.',
+                    meaning: 'Ya Allah, sesungguhnya aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang halal, dan amalan yang diterima.',
+                    source: 'HR. Ibnu Majah no. 925'
+                }
+            ],
+            'Zikir Petang': [
+                {
+                    title: 'Perlindungan Petang Hari',
+                    arab: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
+                    latin: 'Amsayna wa amsal mulku lillah, walhamdulillah, la ilaha illallahu wahdahu la syarika lah.',
+                    meaning: 'Kami telah memasuki waktu petang dan kerajaan milik Allah, segala puji bagi Allah. Tidak ada Tuhan selain Allah semata, tiada sekutu bagi-Nya.',
+                    source: 'HR. Muslim no. 2723'
+                },
+                {
+                    title: 'Ridha kepada Allah, Islam & Nabi',
+                    arab: 'رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ نَبِيًّا',
+                    latin: 'Radhitu billahi rabba, wa bil-islami dina, wa bi-muhammadin nabiyya.',
+                    meaning: 'Aku ridha Allah sebagai Rabb, Islam sebagai agama, dan Muhammad sebagai nabi.',
+                    source: 'HR. Abu Dawud & Tirmidzi'
+                }
+            ],
+            'Setelah Salat': [
+                {
+                    title: 'Istighfar & Salam',
+                    arab: 'أَسْتَغْفِرُ اللَّهَ (٣×) اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ',
+                    latin: 'Astaghfirullah (3x). Allahumma antas-salam wa minkas-salam, tabarakta ya dzal-jalali wal-ikram.',
+                    meaning: 'Aku memohon ampun kepada Allah (3x). Ya Allah, Engkau pemberi keselamatan dan dari-Mu keselamatan, Maha Suci Engkau wahai Pemilik Keagungan dan Kemuliaan.',
+                    source: 'HR. Muslim no. 591'
+                }
+            ],
+            'Doa Harian': [
+                {
+                    title: 'Doa Kebaikan Dunia & Akhirat',
+                    arab: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+                    latin: 'Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina \'adzaban-nar.',
+                    meaning: 'Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, serta lindungilah kami dari azab neraka.',
+                    source: 'QS. Al-Baqarah: 201'
+                }
+            ]
+        };
+
+        const MOOD_CURATIONS = {
+            cemas: {
+                badge: 'Untuk Hati yang Cemas & Gelisah',
+                arab: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ',
+                ref: 'QS. Ar-Ra\'d: 28',
+                translation: 'Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram.',
+                doaArab: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ',
+                doaLatin: 'Allahumma inni a\'udzu bika minal-hammi wal-hazan',
+                doaMeaning: 'Ya Allah, aku berlindung kepada-Mu dari rasa gundah dan kesedihan.',
+                reflection: 'Cemas sering muncul saat kita mencoba mengendalikan semua hal sekaligus. Tarik napas pelan, serahkan hasil akhirnya kepada Allah, dan kerjakan bagian kecil yang ada di depan mata.'
+            },
+            lelah: {
+                badge: 'Untuk Jiwa yang Lelah Berikhtiar',
+                arab: 'لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا',
+                ref: 'QS. Al-Baqarah: 286',
+                translation: 'Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya.',
+                doaArab: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ',
+                doaLatin: 'Hasbunallahu wa ni\'mal wakil',
+                doaMeaning: 'Cukuplah Allah menjadi Penolong kami dan Allah adalah sebaik-baik Pelindung.',
+                reflection: 'Istirahat juga bagian dari ibadah ketika diniatkan untuk memulihkan tenaga agar dapat kembali memberi manfaat. Jangan memaksa diri melampaui batas.'
+            },
+            bersyukur: {
+                badge: 'Merawat Rasa Syukur',
+                arab: 'لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ',
+                ref: 'QS. Ibrahim: 7',
+                translation: 'Sesungguhnya jika kamu bersyukur, niscaya Aku akan menambah (nikmat) kepadamu.',
+                doaArab: 'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ',
+                doaLatin: 'Rabbi awzi\'ni an asykura ni\'mataka',
+                doaMeaning: 'Ya Tuhanku, anugerahkanlah aku ilham untuk tetap mensyukuri nikmat-Mu.',
+                reflection: 'Nikmat sering terasa kecil saat kita membandingkannya, namun terasa luas saat kita menyadarinya. Ucapkan Alhamdulillah atas hal-hal sederhana hari ini.'
+            },
+            petunjuk: {
+                badge: 'Memohon Kejernihan & Petunjuk',
+                arab: 'وَالَّذِينَ جَاهَدُوا فِينَا لَنَهْدِيَنَّهُمْ سُبُلَنَا',
+                ref: 'QS. Al-\'Ankabut: 69',
+                translation: 'Dan orang-orang yang bersungguh-sungguh untuk (mencari keridaan) Kami, benar-benar akan Kami tunjukkan kepada mereka jalan-jalan Kami.',
+                doaArab: 'اللَّهُمَّ اهْدِنِي وَسَدِّدْنِي',
+                doaLatin: 'Allahummahdini wa saddidni',
+                doaMeaning: 'Ya Allah, berilah aku petunjuk dan luruskanlah langkahku.',
+                reflection: 'Saat pilihan terasa kabur, tenangkan hati terlebih dahulu sebelum mengambil keputusan. Mintalah petunjuk dengan sungguh-sungguh dan perhatikan tanda kebaikan yang dimudahkan.'
+            }
+        };
+
+        function getTodayKey() {
+            const d = new Date();
+            const offset = d.getTimezoneOffset() * 60000;
+            return new Date(d - offset).toISOString().split('T')[0];
+        }
+
+        let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+            darkMode: false,
+            city: INDONESIAN_CITIES[0],
+            lastActiveDate: getTodayKey(),
+            habits: DEFAULT_HABITS,
+            historyByDate: {}, // { 'YYYY-MM-DD': completedCount }
+            tilawah: { readPages: 0, targetDays: 30 },
+            tasbih: { count: 0, total: 0, target: 33, arab: 'سُبْحَانَ اللَّهِ', latin: 'Subhanallah' },
+            quran: {
+                surahNumber: 1,
+                fontSize: 28,
+                focusMode: false,
+                repeatMode: 'off', // 'off' | 'surah'
+                lastRead: null, // { surahNumber, surahName, ayahNumber }
+                bookmarks: [] // { id, surahNumber, surahName, ayahNumber, arab, translation, tag }
+            },
+            sedekahLogs: [] // { id, date, note, amount }
+        };
+
+        // Reset checklist harian jika berganti hari, sambil menyimpan histori hari sebelumnya
+        if (state.lastActiveDate !== getTodayKey()) {
+            const prevCompleted = state.habits.filter(h => h.done).length;
+            if (prevCompleted > 0) {
+                state.historyByDate[state.lastActiveDate] = prevCompleted;
+            }
+            state.habits = state.habits.map(h => ({ ...h, done: false }));
+            state.lastActiveDate = getTodayKey();
+            saveState();
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function showToast(message, icon = '✨') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = message;
+            document.getElementById('toast-icon').textContent = icon;
+            toast.classList.remove('opacity-0', '-translate-y-3');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', '-translate-y-3');
+            }, 2200);
+        }
+
+        function formatRupiah(num) {
+            return 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
+        }
+
+        // ---------------------------------------------------------
+        // 2. TEMA & NAVIGASI TAB
+        // ---------------------------------------------------------
+        function applyTheme() {
+            document.documentElement.classList.toggle('dark', !!state.darkMode);
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            state.darkMode = !state.darkMode;
+            applyTheme();
+            saveState();
+        });
+
+        const TAB_META = {
+            dashboard: { title: 'Dashboard & Waktu Salat', sub: 'Jadwal salat, hitungan waktu, dan arah kiblat' },
+            quran: { title: 'Al-Qur\'an & Hadis Pilihan', sub: 'Bacaan ayat berharakat, murottal, bookmark, dan hadis tematik' },
+            zikir: { title: 'Zikir, Doa & Tasbih Digital', sub: 'Dzikir terstruktur dan penghitung tasbih interaktif' },
+            habits: { title: 'Habit Ibadah & Tilawah', sub: 'Pelacak kebiasaan ramah tanpa rasa bersalah & target khatam' },
+            mood: { title: 'Mood & Soul Companion', sub: 'Ayat, doa, dan renungan sesuai kondisi hati' },
+            zakat: { title: 'Kalkulator Zakat & Sedekah', sub: 'Perhitungan zakat praktis dan catatan amal bulanan' }
+        };
+
+        window.switchTab = function(tabName) {
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.toggle('hidden', panel.id !== `tab-${tabName}`);
+            });
+
+            // Update Desktop Sidebar
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const active = btn.dataset.tab === tabName;
+                btn.className = active
+                    ? 'nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold bg-sage-400 text-white shadow-sm'
+                    : 'nav-item w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-sage-700 dark:text-beige-200 hover:bg-sage-100 dark:hover:bg-calmDark-elevated';
+            });
+
+            // Update Mobile Bottom Nav
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                const active = btn.dataset.tab === tabName;
+                btn.className = active
+                    ? 'mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-white bg-sage-400 font-bold text-[10px]'
+                    : 'mobile-nav-btn flex-1 py-2 rounded-2xl flex flex-col items-center gap-0.5 text-sage-500 dark:text-sage-400 font-semibold text-[10px]';
+            });
+
+            if (TAB_META[tabName]) {
+                document.getElementById('desktop-page-title').textContent = TAB_META[tabName].title;
+                document.getElementById('desktop-page-subtitle').textContent = TAB_META[tabName].sub;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.querySelectorAll('.nav-item, .mobile-nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // ---------------------------------------------------------
+        // 3. JADWAL SALAT (API ALADHAN), COUNTDOWN & ARAH KIBLAT
+        // ---------------------------------------------------------
+        let currentPrayerSchedule = null;
+        let countdownTimer = null;
+
+        function updateDatesDisplay(hijriStr = null) {
+            const now = new Date();
+            const greg = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('hero-gregorian-date').textContent = greg;
+            document.getElementById('sidebar-gregorian').textContent = greg;
+
+            if (hijriStr) {
+                document.getElementById('hero-hijri-date').textContent = hijriStr;
+                document.getElementById('sidebar-hijri').textContent = hijriStr;
+                document.getElementById('mobile-hijri-badge').textContent = `${state.city.name} • ${hijriStr}`;
+            } else {
+                document.getElementById('mobile-hijri-badge').textContent = `${state.city.name}`;
+            }
+        }
+
+        function calculateQiblaAzimuth(lat, lng) {
+            // Koordinat Ka'bah di Makkah: 21.4225° N, 39.8262° E
+            const kaabaLat = 21.4225 * Math.PI / 180;
+            const kaabaLng = 39.8262 * Math.PI / 180;
+            const userLat = lat * Math.PI / 180;
+            const userLng = lng * Math.PI / 180;
+
+            const dLng = kaabaLng - userLng;
+            const y = Math.sin(dLng);
+            const x = Math.cos(userLat) * Math.tan(kaabaLat) - Math.sin(userLat) * Math.cos(dLng);
+            let brng = Math.atan2(y, x) * 180 / Math.PI;
+            return (brng + 360) % 360;
+        }
+
+        function updateQiblaDisplay(lat, lng, labelText) {
+            const azimuth = calculateQiblaAzimuth(lat, lng);
+            document.getElementById('qibla-degree-text').textContent = `${azimuth.toFixed(1)}°`;
+            document.getElementById('qibla-needle').style.transform = `rotate(${azimuth}deg)`;
+            document.getElementById('qibla-location-desc').textContent = labelText;
+        }
+
+        async function fetchPrayerTimes() {
+            const now = new Date();
+            const dd = String(now.getDate()).padStart(2, '0');
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const yyyy = now.getFullYear();
+
+            document.getElementById('header-city-name').textContent = state.city.name;
+            updateQiblaDisplay(state.city.lat, state.city.lng, `Dari ${state.city.name} (${state.city.lat.toFixed(2)}, ${state.city.lng.toFixed(2)})`);
+
+            try {
+                // Menggunakan API Aladhan (method 20 = Kemenag RI)
+                const url = `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}?latitude=${state.city.lat}&longitude=${state.city.lng}&method=20`;
+                const res = await fetch(url);
+                const json = await res.json();
+
+                if (json.code === 200 && json.data) {
+                    const t = json.data.timings;
+                    const h = json.data.date.hijri;
+                    const hijriFormatted = `${h.day} ${h.month.en} ${h.year} H`;
+                    updateDatesDisplay(hijriFormatted);
+
+                    currentPrayerSchedule = [
+                        { key: 'Imsak', label: 'Imsak', time: t.Imsak.slice(0, 5) },
+                        { key: 'Fajr', label: 'Subuh', time: t.Fajr.slice(0, 5) },
+                        { key: 'Sunrise', label: 'Syuruq', time: t.Sunrise.slice(0, 5) },
+                        { key: 'Dhuhr', label: 'Dzuhur', time: t.Dhuhr.slice(0, 5) },
+                        { key: 'Asr', label: 'Ashar', time: t.Asr.slice(0, 5) },
+                        { key: 'Maghrib', label: 'Maghrib', time: t.Maghrib.slice(0, 5) },
+                        { key: 'Isha', label: 'Isya', time: t.Isha.slice(0, 5) }
+                    ];
+
+                    renderPrayerGrid();
+                    startPrayerCountdown();
+                }
+            } catch (err) {
+                console.error('Gagal memuat jadwal salat:', err);
+                updateDatesDisplay();
+                document.getElementById('prayer-source-info').textContent = 'Mode offline (periksa koneksi internet untuk sinkronisasi)';
+            }
+        }
+
+        function renderPrayerGrid() {
+            const grid = document.getElementById('prayer-times-grid');
+            if (!currentPrayerSchedule) return;
+
+            grid.innerHTML = currentPrayerSchedule.map(item => `
+                <div class="p-3 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200/80 dark:border-calmDark-border text-center">
+                    <span class="text-[11px] font-bold text-sage-500 dark:text-sage-400 block">${item.label}</span>
+                    <span class="text-sm sm:text-base font-extrabold text-sage-900 dark:text-beige-50 mt-0.5 block font-mono">${item.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function startPrayerCountdown() {
+            if (countdownTimer) clearInterval(countdownTimer);
+
+            const tick = () => {
+                if (!currentPrayerSchedule) return;
+                const now = new Date();
+                const nowMinutes = now.getHours() * 60 + now.getMinutes();
+                const nowSeconds = now.getSeconds();
+                const nowTotalSec = nowMinutes * 60 + nowSeconds;
+
+                // Salat utama untuk countdown (Subuh, Dzuhur, Ashar, Maghrib, Isya)
+                const mainPrayers = currentPrayerSchedule.filter(p => ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].includes(p.key));
+
+                let targetPrayer = null;
+                let targetSec = 0;
+
+                for (const p of mainPrayers) {
+                    const [hh, mm] = p.time.split(':').map(Number);
+                    const pSec = hh * 3600 + mm * 60;
+                    if (pSec > nowTotalSec) {
+                        targetPrayer = p;
+                        targetSec = pSec - nowTotalSec;
+                        break;
+                    }
+                }
+
+                // Jika sudah lewat Isya, target berikutnya adalah Subuh besok
+                if (!targetPrayer && mainPrayers.length > 0) {
+                    const subuh = mainPrayers[0];
+                    const [hh, mm] = subuh.time.split(':').map(Number);
+                    const subuhSec = hh * 3600 + mm * 60;
+                    targetPrayer = subuh;
+                    targetSec = (24 * 3600 - nowTotalSec) + subuhSec;
+                }
+
+                if (targetPrayer) {
+                    document.getElementById('next-prayer-name').textContent = targetPrayer.label;
+                    document.getElementById('next-prayer-time').textContent = targetPrayer.time;
+
+                    const hrs = Math.floor(targetSec / 3600);
+                    const mins = Math.floor((targetSec % 3600) / 60);
+                    const secs = targetSec % 60;
+                    document.getElementById('prayer-countdown').textContent =
+                        `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+            };
+
+            tick();
+            countdownTimer = setInterval(tick, 1000);
+        }
+
+        // Pencarian Kota Indonesia
+        const cityInput = document.getElementById('city-search-input');
+        const cityResults = document.getElementById('city-search-results');
+
+        cityInput.addEventListener('input', () => {
+            const q = cityInput.value.trim().toLowerCase();
+            if (!q) {
+                cityResults.classList.add('hidden');
+                return;
+            }
+            const matches = INDONESIAN_CITIES.filter(c => c.name.toLowerCase().includes(q));
+            if (matches.length === 0) {
+                cityResults.innerHTML = `<div class="p-3 text-xs text-sage-400">Kota tidak ditemukan</div>`;
+            } else {
+                cityResults.innerHTML = matches.map(c => `
+                    <button type="button" data-city="${c.name}" class="w-full text-left px-3.5 py-2 text-xs font-bold text-sage-800 dark:text-beige-100 hover:bg-sage-50 dark:hover:bg-calmDark-bg flex items-center justify-between">
+                        <span>${c.name}</span>
+                        <span class="text-[10px] text-sage-400">Pilih</span>
+                    </button>
+                `).join('');
+            }
+            cityResults.classList.remove('hidden');
+        });
+
+        cityResults.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-city]');
+            if (!btn) return;
+            const chosen = INDONESIAN_CITIES.find(c => c.name === btn.dataset.city);
+            if (chosen) {
+                state.city = chosen;
+                saveState();
+                cityInput.value = '';
+                cityResults.classList.add('hidden');
+                fetchPrayerTimes();
+                showToast(`Lokasi diubah ke ${chosen.name}`, '📍');
+            }
+        });
+
+        document.getElementById('btn-quick-city').addEventListener('click', () => {
+            switchTab('dashboard');
+            setTimeout(() => document.getElementById('city-search-input').focus(), 150);
+        });
+
+        // GPS Lokasi untuk Kiblat
+        document.getElementById('btn-gps-qibla').addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                showToast('Browser tidak mendukung GPS', '⚠️');
+                return;
+            }
+            showToast('Mendeteksi lokasi GPS...', '📡');
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    updateQiblaDisplay(latitude, longitude, `GPS (${latitude.toFixed(3)}, ${longitude.toFixed(3)})`);
+                    showToast('Arah kiblat diperbarui via GPS', '🕋');
+                },
+                () => {
+                    showToast('Izin lokasi ditolak, memakai koordinat kota', 'ℹ️');
+                }
+            );
+        });
+
+        // ---------------------------------------------------------
+        // 4. AL-QUR'AN DIGITAL (API EQURAN.ID) & HADIS PILIHAN
+        // ---------------------------------------------------------
+        let allSurahs = [];
+        let activeSurahDetail = null;
+        const quranAudio = document.getElementById('quran-audio-player');
+
+        // Switch Sub-tab Al-Qur'an vs Hadis
+        document.getElementById('subtab-quran-btn').addEventListener('click', () => {
+            document.getElementById('subtab-quran-btn').className = 'px-4 py-2 rounded-xl text-xs font-bold bg-sage-400 text-white';
+            document.getElementById('subtab-hadith-btn').className = 'px-4 py-2 rounded-xl text-xs font-bold text-sage-600 dark:text-beige-200';
+            document.getElementById('quran-view').classList.remove('hidden');
+            document.getElementById('hadith-view').classList.add('hidden');
+        });
+
+        document.getElementById('subtab-hadith-btn').addEventListener('click', () => {
+            document.getElementById('subtab-hadith-btn').className = 'px-4 py-2 rounded-xl text-xs font-bold bg-sage-400 text-white';
+            document.getElementById('subtab-quran-btn').className = 'px-4 py-2 rounded-xl text-xs font-bold text-sage-600 dark:text-beige-200';
+            document.getElementById('hadith-view').classList.remove('hidden');
+            document.getElementById('quran-view').classList.add('hidden');
+            document.getElementById('bookmarks-drawer').classList.add('hidden');
+        });
+
+        async function loadSurahList() {
+            try {
+                const res = await fetch('https://equran.id/api/v2/surat');
+                const json = await res.json();
+                if (json.code === 200 && Array.isArray(json.data)) {
+                    allSurahs = json.data;
+                    renderSurahList(allSurahs);
+                    loadSurahDetail(state.quran.surahNumber || 1);
+                }
+            } catch (err) {
+                console.error('Gagal memuat daftar surat:', err);
+                document.getElementById('surah-list').innerHTML = `<p class="text-xs text-sage-400 text-center py-6">Tidak dapat memuat daftar surat. Cek koneksi internet.</p>`;
+            }
+        }
+
+        function renderSurahList(list) {
+            const container = document.getElementById('surah-list');
+            container.innerHTML = list.map(s => {
+                const isSelected = s.nomor === state.quran.surahNumber;
+                return `
+                    <button onclick="loadSurahDetail(${s.nomor})" class="w-full text-left p-3 rounded-2xl flex items-center justify-between gap-2 transition-all ${
+                        isSelected
+                        ? 'bg-sage-400 text-white shadow-2xs'
+                        : 'bg-beige-50/70 dark:bg-calmDark-bg hover:bg-sage-50 dark:hover:bg-calmDark-elevated text-sage-900 dark:text-beige-100'
+                    }">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <span class="w-7 h-7 rounded-xl text-xs font-extrabold flex items-center justify-center shrink-0 ${
+                                isSelected ? 'bg-white/20 text-white' : 'bg-sage-100 dark:bg-calmDark-elevated text-sage-700 dark:text-sage-300'
+                            }">${s.nomor}</span>
+                            <div class="truncate">
+                                <p class="text-xs font-extrabold truncate">${s.namaLatin}</p>
+                                <p class="text-[10px] opacity-80 truncate">${s.arti} • ${s.jumlahAyat} Ayat</p>
+                            </div>
+                        </div>
+                        <span class="arabic-text text-lg font-bold shrink-0">${s.nama}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('surah-search').addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            const filtered = allSurahs.filter(s =>
+                s.namaLatin.toLowerCase().includes(q) ||
+                s.arti.toLowerCase().includes(q) ||
+                String(s.nomor) === q
+            );
+            renderSurahList(filtered);
+        });
+
+        window.loadSurahDetail = async function(surahNumber) {
+            state.quran.surahNumber = surahNumber;
+            saveState();
+            if (allSurahs.length > 0) renderSurahList(allSurahs);
+
+            // Hentikan audio sebelumnya saat pindah surat
+            quranAudio.pause();
+            document.getElementById('surah-audio-icon').setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+
+            document.getElementById('ayah-list').innerHTML = `<p class="text-xs text-sage-400 text-center py-10">Memuat ayat...</p>`;
+
+            try {
+                const res = await fetch(`https://equran.id/api/v2/surat/${surahNumber}`);
+                const json = await res.json();
+                if (json.code === 200 && json.data) {
+                    activeSurahDetail = json.data;
+                    document.getElementById('active-surah-title').textContent = `${activeSurahDetail.namaLatin} (${activeSurahDetail.nama})`;
+                    document.getElementById('active-surah-meta').textContent = `${activeSurahDetail.arti} • ${activeSurahDetail.jumlahAyat} Ayat • ${activeSurahDetail.tempatTurun}`;
+
+                    // Set sumber audio murottal (Mishary Rashid Alafasy - '05')
+                    const audioSrc = activeSurahDetail.audioFull['05'] || Object.values(activeSurahDetail.audioFull)[0];
+                    quranAudio.src = audioSrc || '';
+                    document.getElementById('audio-status-text').textContent = `Murottal ${activeSurahDetail.namaLatin}`;
+
+                    renderAyahs();
+                }
+            } catch (err) {
+                console.error('Gagal memuat detail surat:', err);
+                document.getElementById('ayah-list').innerHTML = `<p class="text-xs text-sage-400 text-center py-10">Gagal memuat ayat.</p>`;
+            }
+        };
+
+        function renderAyahs() {
+            if (!activeSurahDetail) return;
+            const container = document.getElementById('ayah-list');
+            const fontSize = state.quran.fontSize || 28;
+            const focusMode = !!state.quran.focusMode;
+
+            container.innerHTML = activeSurahDetail.ayat.map(ayah => {
+                const isLastRead = state.quran.lastRead &&
+                    state.quran.lastRead.surahNumber === activeSurahDetail.nomor &&
+                    state.quran.lastRead.ayahNumber === ayah.nomorAyat;
+
+                return `
+                    <div id="ayah-${ayah.nomorAyat}" class="p-4 rounded-2xl border transition-all ${
+                        isLastRead
+                        ? 'bg-gold-50/70 dark:bg-gold-500/10 border-gold-300 dark:border-gold-600/40'
+                        : 'bg-beige-50/70 dark:bg-calmDark-bg border-beige-200/80 dark:border-calmDark-border'
+                    }">
+                        <!-- Baris Atas: Nomor Ayat & Aksi -->
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="px-2.5 py-1 rounded-xl bg-sage-100 dark:bg-calmDark-elevated text-sage-700 dark:text-sage-300 text-xs font-extrabold">
+                                ${activeSurahDetail.nomor}:${ayah.nomorAyat}
+                            </span>
+
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="markLastRead(${activeSurahDetail.nomor}, '${activeSurahDetail.namaLatin}', ${ayah.nomorAyat})" title="Tandai Terakhir Dibaca" class="p-1.5 rounded-xl hover:bg-sage-100 dark:hover:bg-calmDark-elevated text-xs font-semibold ${isLastRead ? 'text-gold-600 dark:text-gold-300' : 'text-sage-500'}">
+                                    <i data-lucide="bookmark" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="bookmarkAyah(${activeSurahDetail.nomor}, '${activeSurahDetail.namaLatin}', ${ayah.nomorAyat})" title="Simpan ke Bookmark" class="p-1.5 rounded-xl hover:bg-sage-100 dark:hover:bg-calmDark-elevated text-sage-500">
+                                    <i data-lucide="tag" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Teks Arab Berharakat -->
+                        <p class="arabic-text font-bold text-sage-900 dark:text-beige-50 mb-3" style="font-size: ${fontSize}px;">
+                            ${ayah.teksArab}
+                        </p>
+
+                        <!-- Transliterasi Latin & Terjemahan (Disembunyikan jika Focus Mode aktif) -->
+                        ${!focusMode ? `
+                            <p class="text-xs font-semibold text-sage-600 dark:text-sage-300 italic mb-1.5">${ayah.teksLatin}</p>
+                            <p class="text-xs sm:text-sm text-sage-800 dark:text-beige-200 leading-relaxed">${ayah.teksIndonesia}</p>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // Kontrol Font Arab
+        document.getElementById('font-inc').addEventListener('click', () => {
+            state.quran.fontSize = Math.min(44, (state.quran.fontSize || 28) + 2);
+            document.getElementById('arabic-font-size-label').textContent = `${state.quran.fontSize}px`;
+            saveState();
+            renderAyahs();
+        });
+
+        document.getElementById('font-dec').addEventListener('click', () => {
+            state.quran.fontSize = Math.max(22, (state.quran.fontSize || 28) - 2);
+            document.getElementById('arabic-font-size-label').textContent = `${state.quran.fontSize}px`;
+            saveState();
+            renderAyahs();
+        });
+
+        // Focus Mode Toggle
+        document.getElementById('btn-focus-mode').addEventListener('click', () => {
+            state.quran.focusMode = !state.quran.focusMode;
+            saveState();
+            renderAyahs();
+            showToast(state.quran.focusMode ? 'Focus Reading Mode aktif' : 'Mode baca normal aktif', '📖');
+        });
+
+        // Pemutar Audio Murottal & Repeat
+        document.getElementById('btn-play-surah-audio').addEventListener('click', () => {
+            if (!quranAudio.src) return;
+            if (quranAudio.paused) {
+                quranAudio.play();
+                document.getElementById('surah-audio-icon').setAttribute('data-lucide', 'pause');
+                document.getElementById('audio-sub-text').textContent = 'Sedang memutar murottal...';
+            } else {
+                quranAudio.pause();
+                document.getElementById('surah-audio-icon').setAttribute('data-lucide', 'play');
+                document.getElementById('audio-sub-text').textContent = 'Dijeda';
+            }
+            lucide.createIcons();
+        });
+
+        document.getElementById('btn-repeat-toggle').addEventListener('click', () => {
+            state.quran.repeatMode = state.quran.repeatMode === 'off' ? 'surah' : 'off';
+            document.getElementById('repeat-mode-label').textContent = `Repeat: ${state.quran.repeatMode === 'surah' ? 'Surat' : 'Off'}`;
+            saveState();
+        });
+
+        quranAudio.addEventListener('ended', () => {
+            if (state.quran.repeatMode === 'surah') {
+                quranAudio.currentTime = 0;
+                quranAudio.play();
+            } else {
+                document.getElementById('surah-audio-icon').setAttribute('data-lucide', 'play');
+                document.getElementById('audio-sub-text').textContent = 'Selesai diputar';
+                lucide.createIcons();
+            }
+        });
+
+        // Last Read & Bookmarks
+        window.markLastRead = function(surahNumber, surahName, ayahNumber) {
+            state.quran.lastRead = { surahNumber, surahName, ayahNumber };
+            saveState();
+            updateLastReadUI();
+            renderAyahs();
+            showToast(`Last read: ${surahName} ayat ${ayahNumber}`, '🔖');
+        };
+
+        window.bookmarkAyah = function(surahNumber, surahName, ayahNumber) {
+            if (!activeSurahDetail) return;
+            const ayahObj = activeSurahDetail.ayat.find(a => a.nomorAyat === ayahNumber);
+            if (!ayahObj) return;
+
+            const exists = state.quran.bookmarks.some(b => b.surahNumber === surahNumber && b.ayahNumber === ayahNumber);
+            if (exists) {
+                showToast('Ayat sudah ada di bookmark', 'ℹ️');
+                return;
+            }
+
+            state.quran.bookmarks.unshift({
+                id: 'bm_' + Date.now(),
+                surahNumber,
+                surahName,
+                ayahNumber,
+                arab: ayahObj.teksArab,
+                translation: ayahObj.teksIndonesia,
+                tag: 'Refleksi'
+            });
+            saveState();
+            updateBookmarksUI();
+            showToast(`Ayat ${surahName}:${ayahNumber} disimpan`, '📌');
+        };
+
+        function updateLastReadUI() {
+            const lr = state.quran.lastRead;
+            const label = lr ? `${lr.surahName} : ${lr.ayahNumber}` : 'Belum ada';
+            document.getElementById('last-read-label').textContent = `Last Read: ${label}`;
+            document.getElementById('dash-last-read').textContent = label;
+        }
+
+        document.getElementById('btn-jump-last-read').addEventListener('click', () => {
+            const lr = state.quran.lastRead;
+            if (!lr) {
+                showToast('Belum ada penanda terakhir dibaca', 'ℹ️');
+                return;
+            }
+            loadSurahDetail(lr.surahNumber).then(() => {
+                setTimeout(() => {
+                    const el = document.getElementById(`ayah-${lr.ayahNumber}`);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 350);
+            });
+        });
+
+        function updateBookmarksUI() {
+            const bms = state.quran.bookmarks || [];
+            document.getElementById('bookmark-count').textContent = bms.length;
+            const list = document.getElementById('bookmarks-list');
+
+            if (bms.length === 0) {
+                list.innerHTML = `<p class="text-xs text-sage-400">Belum ada ayat yang di-bookmark.</p>`;
+                return;
+            }
+
+            list.innerHTML = bms.map(b => `
+                <div class="p-3.5 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border flex items-start justify-between gap-3">
+                    <div class="space-y-1 flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-extrabold text-sage-800 dark:text-beige-100">${b.surahName} Ayat ${b.ayahNumber}</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-gold-100 dark:bg-gold-500/15 text-gold-700 dark:text-gold-300 font-bold">${b.tag}</span>
+                        </div>
+                        <p class="arabic-text text-lg text-sage-900 dark:text-beige-50">${b.arab}</p>
+                        <p class="text-xs text-sage-600 dark:text-sage-300">${b.translation}</p>
+                    </div>
+                    <button onclick="removeBookmark('${b.id}')" class="text-sage-400 hover:text-gold-600 p-1">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.removeBookmark = function(id) {
+            state.quran.bookmarks = state.quran.bookmarks.filter(b => b.id !== id);
+            saveState();
+            updateBookmarksUI();
+        };
+
+        document.getElementById('btn-view-bookmarks').addEventListener('click', () => {
+            const drawer = document.getElementById('bookmarks-drawer');
+            drawer.classList.toggle('hidden');
+            updateBookmarksUI();
+        });
+
+        // Hadis Pilihan Tematik
+        function renderHadiths(category = 'Semua') {
+            const filtered = category === 'Semua'
+                ? HADITH_DATA
+                : HADITH_DATA.filter(h => h.category === category);
+
+            document.getElementById('hadith-list').innerHTML = filtered.map(h => `
+                <div class="p-5 rounded-3xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-sage-100 dark:bg-calmDark-elevated text-sage-700 dark:text-sage-300 text-[11px] font-bold">${h.category}</span>
+                        <span class="text-[11px] font-bold text-gold-600 dark:text-gold-300">${h.narrator}</span>
+                    </div>
+                    <p class="arabic-text text-xl font-bold text-sage-900 dark:text-beige-50">${h.arab}</p>
+                    <p class="text-xs text-sage-500 dark:text-sage-400 italic">${h.latin}</p>
+                    <p class="text-xs sm:text-sm text-sage-800 dark:text-beige-200 leading-relaxed">"${h.translation}"</p>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.hadith-cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.hadith-cat-btn').forEach(b => {
+                    b.className = 'hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-white dark:bg-calmDark-card text-sage-700 dark:text-beige-200 border border-beige-200 dark:border-calmDark-border shrink-0';
+                });
+                btn.className = 'hadith-cat-btn px-4 py-2 rounded-2xl text-xs font-bold bg-sage-400 text-white shrink-0';
+                renderHadiths(btn.dataset.cat);
+            });
+        });
+
+        // ---------------------------------------------------------
+        // 5. ZIKIR, DOA & TASBIH DIGITAL
+        // ---------------------------------------------------------
+        function syncTasbihUI() {
+            document.getElementById('tasbih-current-count').textContent = state.tasbih.count;
+            document.getElementById('tasbih-total-count').textContent = state.tasbih.total;
+            document.getElementById('tasbih-target-select').value = state.tasbih.target;
+            document.getElementById('tasbih-active-arab').textContent = state.tasbih.arab;
+            document.getElementById('tasbih-active-latin').textContent = state.tasbih.latin;
+        }
+
+        document.querySelectorAll('.tasbih-phrase-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tasbih-phrase-btn').forEach(b => {
+                    b.className = 'tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200';
+                });
+                btn.className = 'tasbih-phrase-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sage-400 text-white';
+                state.tasbih.arab = btn.dataset.arab;
+                state.tasbih.latin = btn.dataset.latin;
+                syncTasbihUI();
+                saveState();
+            });
+        });
+
+        document.getElementById('tasbih-target-select').addEventListener('change', (e) => {
+            state.tasbih.target = Number(e.target.value);
+            saveState();
+        });
+
+        document.getElementById('tasbih-main-btn').addEventListener('click', () => {
+            state.tasbih.count += 1;
+            state.tasbih.total += 1;
+
+            if (navigator.vibrate) navigator.vibrate(20);
+
+            const ring = document.getElementById('tasbih-ripple-ring');
+            ring.classList.remove('animate-ripple');
+            void ring.offsetWidth;
+            ring.classList.add('animate-ripple');
+
+            if (state.tasbih.count === state.tasbih.target) {
+                if (navigator.vibrate) navigator.vibrate([50, 40, 50]);
+                showToast(`Target ${state.tasbih.target}x tercapai, MasyaAllah`, '🤲');
+            }
+
+            syncTasbihUI();
+            saveState();
+        });
+
+        document.getElementById('tasbih-reset-btn').addEventListener('click', () => {
+            state.tasbih.count = 0;
+            syncTasbihUI();
+            saveState();
+            showToast('Hitungan tasbih di-reset', '🔄');
+        });
+
+        function renderZikirList(category = 'Zikir Pagi') {
+            const items = ZIKIR_DATA[category] || [];
+            document.getElementById('zikir-list-container').innerHTML = items.map(z => `
+                <div class="p-4 rounded-2xl bg-beige-50/80 dark:bg-calmDark-bg border border-beige-200 dark:border-calmDark-border space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <h4 class="text-xs sm:text-sm font-extrabold text-sage-900 dark:text-beige-50">${z.title}</h4>
+                        <span class="text-[10px] font-bold text-sage-500 dark:text-sage-400">${z.source}</span>
+                    </div>
+                    <p class="arabic-text text-xl font-bold text-sage-900 dark:text-beige-50">${z.arab}</p>
+                    <p class="text-xs text-sage-600 dark:text-sage-300 italic">${z.latin}</p>
+                    <p class="text-xs text-sage-700 dark:text-beige-200 leading-relaxed">${z.meaning}</p>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.zcat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.zcat-btn').forEach(b => {
+                    b.className = 'zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200 shrink-0';
+                });
+                btn.className = 'zcat-btn px-3.5 py-2 rounded-2xl text-xs font-bold bg-sage-400 text-white shrink-0';
+                renderZikirList(btn.dataset.zcat);
+            });
+        });
+
+        // ---------------------------------------------------------
+        // 6. HABIT TRACKER (NON-GUILT TRIP) & TILAWAH ADAPTIF
+        // ---------------------------------------------------------
+        function renderHabits() {
+            const container = document.getElementById('habit-checklist-container');
+            container.innerHTML = state.habits.map(h => `
+                <div onclick="toggleHabitItem('${h.id}')" class="p-3.5 rounded-2xl border cursor-pointer flex items-center justify-between gap-3 transition-all ${
+                    h.done
+                    ? 'bg-sage-50 dark:bg-sage-900/30 border-sage-300 dark:border-sage-700/60'
+                    : 'bg-beige-50/60 dark:bg-calmDark-bg border-beige-200 dark:border-calmDark-border hover:border-sage-300'
+                }">
+                    <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-bold ${h.done ? 'line-through text-sage-400 dark:text-sage-500' : 'text-sage-900 dark:text-beige-100'}">${h.title}</p>
+                        <p class="text-[11px] text-sage-500 dark:text-sage-400">${h.desc}</p>
+                    </div>
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center border-2 shrink-0 ${
+                        h.done ? 'bg-sage-400 border-sage-400 text-white' : 'border-beige-300 dark:border-calmDark-border'
+                    }">
+                        ${h.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+                    </span>
+                </div>
+            `).join('');
+
+            const doneCount = state.habits.filter(h => h.done).length;
+            const total = state.habits.length || 1;
+            const pct = Math.round((doneCount / total) * 100);
+
+            document.getElementById('habit-progress-pill').textContent = `${pct}%`;
+            document.getElementById('dash-habit-summary').textContent = `${doneCount} / ${state.habits.length}`;
+
+            // Simpan progres hari ini ke histori
+            state.historyByDate[getTodayKey()] = doneCount;
+            saveState();
+            renderWeeklySupportiveBars();
+            lucide.createIcons();
+        }
+
+        window.toggleHabitItem = function(id) {
+            const target = state.habits.find(h => h.id === id);
+            if (!target) return;
+            target.done = !target.done;
+            renderHabits();
+        };
+
+        document.getElementById('btn-add-custom-habit').addEventListener('click', () => {
+            const input = document.getElementById('custom-habit-input');
+            const val = input.value.trim();
+            if (!val) {
+                showToast('Tuliskan nama kebiasaan dulu', '⚠️');
+                return;
+            }
+            state.habits.push({
+                id: 'custom_' + Date.now(),
+                title: val,
+                desc: 'Kebiasaan pribadi',
+                done: false
+            });
+            input.value = '';
+            renderHabits();
+            showToast('Kebiasaan ditambahkan', '🌿');
+        });
+
+        function renderWeeklySupportiveBars() {
+            const wrap = document.getElementById('weekly-supportive-bars');
+            const daysShort = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            const maxH = Math.max(1, state.habits.length);
+
+            let html = '';
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const offset = d.getTimezoneOffset() * 60000;
+                const key = new Date(d - offset).toISOString().split('T')[0];
+                const count = state.historyByDate[key] || 0;
+                const ratio = Math.min(1, count / maxH);
+                const heightPx = Math.max(10, Math.round(ratio * 48));
+
+                html += `
+                    <div class="flex flex-col items-center gap-1">
+                        <div class="w-full h-12 rounded-xl bg-beige-100 dark:bg-calmDark-bg flex items-end justify-center p-1">
+                            <div class="w-full rounded-lg ${count > 0 ? 'bg-sage-400' : 'bg-beige-200 dark:bg-calmDark-elevated'}" style="height: ${heightPx}px;"></div>
+                        </div>
+                        <span class="text-[10px] font-bold text-sage-500 dark:text-sage-400">${daysShort[d.getDay()]}</span>
+                    </div>
+                `;
+            }
+            wrap.innerHTML = html;
+        }
+
+        // Rencana Target Tilawah Adaptif (604 halaman total Mushaf Madinah)
+        function initTilawahAdaptive() {
+            const readInput = document.getElementById('tilawah-read-pages');
+            const daysSelect = document.getElementById('tilawah-target-days');
+            readInput.value = state.tilawah.readPages || 0;
+            daysSelect.value = state.tilawah.targetDays || 30;
+
+            const recalculate = () => {
+                const totalPages = 604;
+                const read = Math.min(totalPages, Math.max(0, Number(readInput.value) || 0));
+                const days = Math.max(1, Number(daysSelect.value) || 30);
+
+                state.tilawah.readPages = read;
+                state.tilawah.targetDays = days;
+                saveState();
+
+                const remainingPages = totalPages - read;
+                const pagesPerDay = (remainingPages / days).toFixed(1);
+
+                document.getElementById('tilawah-adaptive-result').innerHTML = `
+                    <div class="flex items-center justify-between font-bold">
+                        <span>Sisa Halaman: ${remainingPages} hal</span>
+                        <span class="text-gold-700 dark:text-gold-300">Target: ~${pagesPerDay} hal / hari</span>
+                    </div>
+                    <p class="text-[11px] text-sage-600 dark:text-sage-300 mt-1">
+                        Angka ini otomatis menyesuaikan sisa halamanmu agar target khatam ${days} hari tetap terasa ringan.
+                    </p>
+                `;
+            };
+
+            readInput.addEventListener('input', recalculate);
+            daysSelect.addEventListener('change', recalculate);
+            recalculate();
+        }
+
+        // ---------------------------------------------------------
+        // 7. MOOD & SOUL COMPANION
+        // ---------------------------------------------------------
+        function renderMoodCard(moodKey = 'cemas') {
+            const data = MOOD_CURATIONS[moodKey] || MOOD_CURATIONS.cemas;
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                const active = btn.dataset.mood === moodKey;
+                btn.className = active
+                    ? 'mood-btn p-3.5 rounded-2xl border-2 border-sage-400 bg-sage-50 dark:bg-sage-900/40 text-left transition-all'
+                    : 'mood-btn p-3.5 rounded-2xl border border-beige-200 dark:border-calmDark-border bg-white dark:bg-calmDark-bg text-left transition-all';
+            });
+
+            document.getElementById('mood-curation-card').innerHTML = `
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                    <span class="px-3 py-1 rounded-full bg-gold-100 dark:bg-gold-500/15 text-gold-700 dark:text-gold-300 text-xs font-bold">${data.badge}</span>
+                    <span class="text-xs font-bold text-sage-500 dark:text-sage-400">${data.ref}</span>
+                </div>
+
+                <div>
+                    <p class="arabic-text text-2xl font-bold text-sage-900 dark:text-beige-50 mb-1.5">${data.arab}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-sage-700 dark:text-beige-200">"${data.translation}"</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-white dark:bg-calmDark-card border border-beige-200 dark:border-calmDark-border space-y-1">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-sage-500 dark:text-sage-400">Doa Penguat</span>
+                    <p class="arabic-text text-lg font-bold text-sage-800 dark:text-sage-200">${data.doaArab}</p>
+                    <p class="text-xs italic text-sage-500">${data.doaLatin}</p>
+                    <p class="text-xs text-sage-700 dark:text-beige-200">${data.doaMeaning}</p>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[11px] font-extrabold text-sage-900 dark:text-beige-50">Renungan Singkat</span>
+                    <p class="text-xs sm:text-sm text-sage-600 dark:text-sage-300 leading-relaxed">${data.reflection}</p>
+                </div>
+            `;
+        }
+
+        document.querySelectorAll('.mood-btn').forEach(btn => {
+            btn.addEventListener('click', () => renderMoodCard(btn.dataset.mood));
+        });
+
+        // ---------------------------------------------------------
+        // 8. KALKULATOR ZAKAT & CATATAN SEDEKAH BULANAN
+        // ---------------------------------------------------------
+        let activeZakatType = 'profesi';
+
+        document.querySelectorAll('.ztype-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeZakatType = btn.dataset.ztype;
+                document.querySelectorAll('.ztype-btn').forEach(b => {
+                    b.className = 'ztype-btn flex-1 py-2 px-3 rounded-2xl text-xs font-bold bg-beige-100 dark:bg-calmDark-bg text-sage-700 dark:text-beige-200';
+                });
+                btn.className = 'ztype-btn flex-1 py-2 px-3 rounded-2xl text-xs font-bold bg-sage-400 text-white';
+
+                document.querySelectorAll('.zakat-form').forEach(f => f.classList.add('hidden'));
+                document.getElementById(`zakat-form-${activeZakatType}`).classList.remove('hidden');
+            });
+        });
+
+        document.getElementById('btn-calc-zakat').addEventListener('click', () => {
+            const goldPrice = Math.max(1, Number(document.getElementById('gold-price-input').value) || 1450000);
+            const ricePrice = Math.max(1, Number(document.getElementById('rice-price-input').value) || 15000);
+            const nisabGoldValue = 85 * goldPrice;
+            const nisabMonthlyValue = nisabGoldValue / 12;
+
+            let zakatDue = 0;
+            let info = '';
+
+            if (activeZakatType === 'profesi') {
+                const monthly = (Number(document.getElementById('income-monthly').value) || 0) + (Number(document.getElementById('income-bonus').value) || 0);
+                if (monthly >= nisabMonthlyValue) {
+                    zakatDue = Math.round(monthly * 0.025);
+                    info = `Penghasilan memenuhi nisab bulanan (${formatRupiah(Math.round(nisabMonthlyValue))}). Kadar zakat 2,5%.`;
+                } else {
+                    zakatDue = 0;
+                    info = `Penghasilan belum mencapai nisab bulanan acuan (${formatRupiah(Math.round(nisabMonthlyValue))}). Dapat disalurkan sebagai sedekah/infak.`;
+                }
+            } else if (activeZakatType === 'maal') {
+                const totalAsset = (Number(document.getElementById('maal-savings').value) || 0) + (Number(document.getElementById('maal-gold-value').value) || 0);
+                if (totalAsset >= nisabGoldValue) {
+                    zakatDue = Math.round(totalAsset * 0.025);
+                    info = `Harta mencapai nisab 85g emas (${formatRupiah(nisabGoldValue)}) dan telah memenuhi haul 1 tahun. Kadar zakat 2,5%.`;
+                } else {
+                    zakatDue = 0;
+                    info = `Total harta belum mencapai nisab 85g emas (${formatRupiah(nisabGoldValue)}).`;
+                }
+            } else if (activeZakatType === 'fitrah') {
+                const persons = Math.max(1, Number(document.getElementById('fitrah-persons').value) || 1);
+                zakatDue = Math.round(persons * 2.5 * ricePrice);
+                info = `Perhitungan zakat fitrah untuk ${persons} jiwa × 2,5 kg × ${formatRupiah(ricePrice)}.`;
+            }
+
+            document.getElementById('zakat-amount-text').textContent = formatRupiah(zakatDue);
+            document.getElementById('zakat-nisab-info').textContent = info;
+        });
+
+        // Catatan Sedekah
+        function renderSedekahLogs() {
+            const list = document.getElementById('sedekah-log-list');
+            const totalAmount = state.sedekahLogs.reduce((acc, item) => acc + (Number(item.amount) || 0), 0);
+            document.getElementById('sedekah-total-display').textContent = formatRupiah(totalAmount);
+
+            if (state.sedekahLogs.length === 0) {
+                list.innerHTML = `<p class="text-xs text-sage-400 text-center py-4">Belum ada catatan sedekah.</p>`;
+                return;
+            }
+
+            list.innerHTML = state.sedekahLogs.map(item => `
+                <div class="p-3 rounded-2xl bg-beige-50 dark:bg-calmDark-bg border border-beige-200/80 dark:border-calmDark-border flex items-center justify-between gap-2">
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-sage-900 dark:text-beige-100 truncate">${item.note}</p>
+                        <span class="text-[10px] text-sage-500 dark:text-sage-400">${item.date}</span>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        ${item.amount > 0 ? `<span class="text-xs font-extrabold text-sage-700 dark:text-gold-300">${formatRupiah(item.amount)}</span>` : '<span class="text-[10px] font-semibold text-sage-500">Amal</span>'}
+                        <button onclick="deleteSedekah('${item.id}')" class="text-sage-400 hover:text-gold-600">
+                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        document.getElementById('btn-add-sedekah').addEventListener('click', () => {
+            const noteInput = document.getElementById('sedekah-note-input');
+            const amountInput = document.getElementById('sedekah-amount-input');
+            const note = noteInput.value.trim();
+            const amount = Math.max(0, Number(amountInput.value) || 0);
+
+            if (!note) {
+                showToast('Tuliskan bentuk sedekah/amal dulu', '⚠️');
+                return;
+            }
+
+            const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+            state.sedekahLogs.unshift({
+                id: 'sed_' + Date.now(),
+                date: dateStr,
+                note,
+                amount
+            });
+
+            noteInput.value = '';
+            amountInput.value = '';
+            saveState();
+            renderSedekahLogs();
+            showToast('Catatan sedekah tersimpan', '💝');
+        });
+
+        window.deleteSedekah = function(id) {
+            state.sedekahLogs = state.sedekahLogs.filter(s => s.id !== id);
+            saveState();
+            renderSedekahLogs();
+        };
+
+        // ---------------------------------------------------------
+        // 9. INISIALISASI APLIKASI
+        // ---------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            applyTheme();
+            updateDatesDisplay();
+            fetchPrayerTimes();
+            loadSurahList();
+            renderHadiths('Semua');
+            updateLastReadUI();
+            updateBookmarksUI();
+            syncTasbihUI();
+            renderZikirList('Zikir Pagi');
+            renderHabits();
+            initTilawahAdaptive();
+            renderMoodCard('cemas');
+            renderSedekahLogs();
+        });
+    </script>
+</body>
+</html>
